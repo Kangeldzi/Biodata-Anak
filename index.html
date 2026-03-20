@@ -589,7 +589,6 @@
             filter: brightness(1.05) contrast(1.08);
         }
 
-        /* Video Thumbnail dengan format BLOG_video_class */
         .video-thumb {
             position: relative;
             width: 100%;
@@ -599,11 +598,9 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
-            overflow: hidden;
         }
 
-        .video-thumb iframe,
-        .video-thumb video {
+        .video-thumb iframe {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -611,13 +608,12 @@
             border: none;
         }
 
-        /* Styling untuk video dengan class BLOG_video_class */
-        .blog-video {
+        /* Gaya untuk objek BLOG_video_class */
+        .blog-video-object {
             width: 100%;
             height: 100%;
             object-fit: cover;
             pointer-events: none;
-            background-color: #000;
         }
 
         .play-overlay {
@@ -851,12 +847,10 @@
             justify-content: center;
         }
 
-        .modal-video-container video,
-        .modal-video-container .blog-video-modal {
+        .modal-video-container object,
+        .modal-video-container .BLOG_video_class {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            background-color: #000;
         }
 
         .modal-caption {
@@ -883,6 +877,17 @@
             border-radius: 20px;
             position: relative;
             overflow: hidden;
+        }
+
+        .social-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 188, 212, 0.05) 0%, transparent 70%);
+            z-index: -1;
         }
 
         .social-title {
@@ -927,6 +932,21 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .social-icon:hover::before {
+            left: 100%;
+        }
+
         .social-icon:hover {
             transform: translateY(-5px) scale(1.1);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -962,6 +982,7 @@
             opacity: 0;
             animation: fadeUpWhatsapp 0.8s ease-out 0.5s forwards;
             min-width: 180px;
+            height: auto;
         }
 
         .whatsapp-btn i {
@@ -971,6 +992,20 @@
         .whatsapp-btn:hover {
             transform: translateX(-50%) translateY(-5px);
             box-shadow: 0 10px 30px rgba(37, 211, 102, 0.6);
+            background: linear-gradient(135deg, #128C7E, #25D366);
+        }
+
+        .whatsapp-btn::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border-radius: 16px;
+            background: rgba(37, 211, 102, 0.2);
+            z-index: -1;
+            animation: pulse-ring 2s infinite;
         }
 
         @keyframes fadeUpWhatsapp {
@@ -994,7 +1029,7 @@
             background-color: rgba(10, 14, 42, 0.05);
         }
 
-        /* Modal Styles untuk Biodata */
+        /* Modal Styles - TETAP PERTAHANKAN SEPERTI ASLI */
         .modal {
             display: none;
             position: fixed;
@@ -1061,6 +1096,7 @@
         .personal-data-table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed;
         }
 
         .personal-data-table tr {
@@ -1072,53 +1108,23 @@
 
         .personal-data-table td {
             padding: 8px 0;
+            vertical-align: top;
             word-break: break-word;
+            overflow-wrap: break-word;
+            width: 100% !important;
         }
 
         .personal-data-table td:first-child {
             font-weight: 600;
             color: var(--primary-color);
             font-size: 0.95rem;
+            margin-bottom: 4px;
         }
 
-        .education-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .education-table tr {
-            border-bottom: 1px solid #eee;
-        }
-
-        .education-table td {
-            padding: 12px 5px;
-        }
-
-        .hobbies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .hobby-tag {
-            background-color: rgba(0, 188, 212, 0.1);
-            color: var(--primary-color);
-            padding: 10px 18px;
-            border-radius: 20px;
-            font-weight: 500;
-        }
-
-        .achievement-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        .achievement-item {
-            background-color: rgba(26, 35, 126, 0.05);
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid var(--accent-color);
+        .personal-data-table td:last-child {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
         .skills-list, .experience-list, .organization-list {
@@ -1136,33 +1142,391 @@
             position: absolute;
             left: 0;
             color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .experience-list li:before, .organization-list li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .education-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .education-table tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        .education-table td {
+            padding: 12px 5px;
+        }
+
+        .education-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .hobbies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .hobby-tag {
+            background-color: rgba(0, 188, 212, 0.1);
+            color: var(--primary-color);
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-weight: 500;
+            border: 1px solid rgba(0, 188, 212, 0.3);
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .achievement-item {
+            background-color: rgba(26, 35, 126, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .programming-skills {
+            margin-top: 15px;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            background-color: rgba(0, 188, 212, 0.1);
+            color: var(--primary-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 5px;
+            border: 1px solid rgba(0, 188, 212, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-8px) rotate(120deg);
+            }
+            66% {
+                transform: translateY(-4px) rotate(240deg);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
         }
 
         @keyframes pulse-ring {
-            0% { transform: scale(0.8); opacity: 0.8; }
-            100% { transform: scale(1.5); opacity: 0; }
+            0% {
+                transform: scale(0.8);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
         }
 
         @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @media (max-width: 768px) {
-            .grid-3x2 { gap: 1rem; }
-            .card-info h3 { font-size: 0.85rem; }
-            .play-overlay i { font-size: 2.4rem; }
-            .section-title h2 { font-size: 1.4rem; }
-            .gallery-section { padding: 1.5rem 1rem; }
-            .close-gallery-modal { width: 38px; height: 38px; font-size: 1.5rem; top: 12px; right: 12px; }
+            .container {
+                padding: 0 15px;
+            }
+            
+            header {
+                padding: 25px 15px 15px 15px;
+                border-radius: 0 0 15px 15px;
+                margin-bottom: 15px;
+            }
+            
+            .name-title h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-info {
+                margin-bottom: 15px;
+            }
+            
+            #music-bar {
+                min-width: 350px;
+                padding: 6px 15px;
+            }
+            
+            .navbar-container {
+                margin-bottom: 25px;
+            }
+            
+            .nav-item {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .action-buttons {
+                max-width: 350px;
+                gap: 14px;
+            }
+            
+            .action-btn {
+                padding: 12px 20px;
+            }
+            
+            .action-btn i {
+                font-size: 1.8rem;
+                margin-right: 15px;
+                width: 35px;
+            }
+            
+            .action-btn-title {
+                font-size: 1rem;
+            }
+            
+            .action-btn-desc {
+                font-size: 0.75rem;
+            }
+            
+            .grid-3x2 {
+                gap: 1rem;
+            }
+            
+            .card-info h3 {
+                font-size: 0.85rem;
+            }
+            
+            .play-overlay i {
+                font-size: 2.4rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.4rem;
+            }
+            
+            .gallery-section {
+                padding: 1.5rem 1rem;
+            }
+            
+            .modal-content {
+                max-height: 90vh;
+                margin: 10px;
+                width: calc(100% - 20px);
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .personal-data-table td:first-child {
+                font-size: 0.9rem;
+            }
+            
+            .personal-data-table td:last-child {
+                font-size: 0.85rem;
+            }
+            
+            .social-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+            
+            .whatsapp-btn {
+                padding: 10px 20px;
+                min-width: 160px;
+                font-size: 0.9rem;
+                bottom: 20px;
+            }
+            
+            .close-gallery-modal {
+                width: 38px;
+                height: 38px;
+                font-size: 1.5rem;
+                top: 12px;
+                right: 12px;
+            }
         }
 
         @media (max-width: 480px) {
-            .grid-3x2 { gap: 0.8rem; }
-            .card-info { padding: 0.6rem; }
-            .badge { font-size: 0.55rem; }
-            .more-link { font-size: 0.9rem; padding: 10px 16px; }
-            .close-gallery-modal { width: 34px; height: 34px; font-size: 1.3rem; top: 10px; right: 10px; }
+            .profile-photo {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .profile-photo i {
+                font-size: 50px;
+            }
+            
+            .name-title h1 {
+                font-size: 1.8rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+            
+            #music-bar {
+                min-width: 300px;
+                padding: 6px 12px;
+                gap: 8px;
+            }
+            
+            #music-bar button {
+                width: 32px;
+                height: 28px;
+                font-size: 16px;
+            }
+            
+            #progress-container {
+                min-width: 100px;
+            }
+            
+            #volume {
+                width: 60px;
+            }
+            
+            .navbar-container {
+                margin-bottom: 20px;
+            }
+            
+            .action-buttons {
+                max-width: 100%;
+                padding: 0 10px;
+                gap: 12px;
+            }
+            
+            .action-btn {
+                padding: 10px 18px;
+            }
+            
+            .action-btn i {
+                font-size: 1.6rem;
+                margin-right: 12px;
+                width: 30px;
+            }
+            
+            .action-btn-title {
+                font-size: 0.95rem;
+            }
+            
+            .action-btn-desc {
+                font-size: 0.7rem;
+            }
+            
+            .grid-3x2 {
+                gap: 0.8rem;
+            }
+            
+            .card-info {
+                padding: 0.6rem;
+            }
+            
+            .badge {
+                font-size: 0.55rem;
+            }
+            
+            .more-link {
+                font-size: 0.9rem;
+                padding: 10px 16px;
+            }
+            
+            .modal-header {
+                padding: 18px 20px;
+            }
+            
+            .modal-header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .modal-body {
+                padding: 18px;
+            }
+            
+            .personal-data-table tr {
+                padding: 10px 0;
+            }
+            
+            .personal-data-table td:first-child {
+                font-size: 0.85rem;
+            }
+            
+            .personal-data-table td:last-child {
+                font-size: 0.8rem;
+            }
+            
+            .social-title {
+                font-size: 1.6rem;
+            }
+            
+            .social-icons {
+                gap: 10px;
+            }
+            
+            .social-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .whatsapp-btn {
+                padding: 8px 16px;
+                min-width: 150px;
+                font-size: 0.85rem;
+                bottom: 15px;
+            }
+            
+            .close-gallery-modal {
+                width: 34px;
+                height: 34px;
+                font-size: 1.3rem;
+                top: 10px;
+                right: 10px;
+            }
         }
     </style>
 </head>
@@ -1181,7 +1545,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="profile-photo">                   
-                  <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgheydWEvQXoKQ_izZ_h5DUUPwVHS1eF_s7PAzDsza65xdP-EDB6QpTZvpUooVm1TuqStGOJrNNPH34UVled_r6dBYyEW1IkahOzhN1eE5GIH6-W6lefJRLkthVge9pTE595W4BhOGIjqZxCfxR7jY_aBPvc6a0a54EBbs_x_BENhli5NRW8DmZvzgZyd8/s320/1000684874.png" alt="Foto Profil" style="width:100%; height:100%; object-fit:cover;">
+                  <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgheydWEvQXoKQ_izZ_h5DUUPwVHS1eF_s7PAzDsza65xdP-EDB6QpTZvpUooVm1TuqStGOJrNNPH34UVled_r6dBYyEW1IkahOzhN1eE5GIH6-W6lefJRLkthVge9pTE595W4BhOGIjqZxCfxR7jY_aBPvc6a0a54EBbs_x_BENhli5NRW8DmZvzgZyd8/s320/1000684874.png" alt="Deskripsi foto" style="width:100%; height:100%; object-fit:cover;">
                 </div>
                 <div class="name-title">
                     <h1>Muhammad Fridzi</h1>
@@ -1270,7 +1634,7 @@
             </a>
         </div>
 
-        <!-- ========== GALERI VIDEO (3x2) dengan format BLOG_video_class ========== -->
+        <!-- ========== GALERI VIDEO (3x2) ========== -->
         <div class="gallery-section">
             <div class="section-title">
                 <i class="fas fa-video"></i>
@@ -1449,6 +1813,19 @@
         progressContainer.addEventListener("click", (e) => { if(audio.duration) audio.currentTime = (e.offsetX / progressContainer.clientWidth) * audio.duration; });
         volume.addEventListener("input", () => audio.volume = volume.value);
 
+        // Efek parallax pada shapes
+        document.addEventListener('mousemove', (e) => {
+            const shapes = document.querySelectorAll('.shape');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            shapes.forEach((shape, index) => {
+                const speed = (index + 1) * 0.3;
+                const x = (mouseX * speed * 20) - 10;
+                const y = (mouseY * speed * 20) - 10;
+                shape.style.transform = `translate(${x}px, ${y}px) rotate(${x}deg)`;
+            });
+        });
+
         // Modal functions untuk biodata
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
@@ -1474,7 +1851,7 @@
         // ========== GALERI DATA DAN FUNGSI ==========
         // Data Foto (6 item untuk grid 3x2)
         const photoItems = [
-            { title: "Abang Fridzi", desc: "Pas Foto 2x3", src: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiAFu-CM_nMw3Rh02FLz91qq9uwFvl4GXszKVnbH0sgyZ9-7H8qLJG0n4K4cTrfvwTTiVf02I8x1HXMyqCUWMIc2_-9P_lb7zQ79VBDSNXpNV_cLe-zCuGFRF9GAGakCiy2K8joq1D8m1-qBiEqdMjEzvbkiAQyZ-3YpH79xdNilXGuvIIJyCNfgr1IAs8/s320/1000688511.png", hdSrc: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiAFu-CM_nMw3Rh02FLz91qq9uwFvl4GXszKVnbH0sgyZ9-7H8qLJG0n4K4cTrfvwTTiVf02I8x1HXMyqCUWMIc2_-9P_lb7zQ79VBDSNXpNV_cLe-zCuGFRF9GAGakCiy2K8joq1D8m1-qBiEqdMjEzvbkiAQyZ-3YpH79xdNilXGuvIIJyCNfgr1IAs8/s320/1000688511.png", badge: "Foto 3x2" },
+            { title: "Abang Fridzi", desc: "Pas Foto", src: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiAFu-CM_nMw3Rh02FLz91qq9uwFvl4GXszKVnbH0sgyZ9-7H8qLJG0n4K4cTrfvwTTiVf02I8x1HXMyqCUWMIc2_-9P_lb7zQ79VBDSNXpNV_cLe-zCuGFRF9GAGakCiy2K8joq1D8m1-qBiEqdMjEzvbkiAQyZ-3YpH79xdNilXGuvIIJyCNfgr1IAs8/s320/1000688511.png", hdSrc: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiAFu-CM_nMw3Rh02FLz91qq9uwFvl4GXszKVnbH0sgyZ9-7H8qLJG0n4K4cTrfvwTTiVf02I8x1HXMyqCUWMIc2_-9P_lb7zQ79VBDSNXpNV_cLe-zCuGFRF9GAGakCiy2K8joq1D8m1-qBiEqdMjEzvbkiAQyZ-3YpH79xdNilXGuvIIJyCNfgr1IAs8/s320/1000688511.png", badge: "Pas Foto 3x2" },
             { title: "Gunung Bromo", desc: "Lautan pasir", src: "https://picsum.photos/id/15/600/600", hdSrc: "https://picsum.photos/id/15/1200/1200", badge: "Gunung" },
             { title: "Hutan Pinus", desc: "Suasana teduh", src: "https://picsum.photos/id/96/600/600", hdSrc: "https://picsum.photos/id/96/1200/1200", badge: "Alam" },
             { title: "Air Terjun", desc: "Kesejukan alami", src: "https://picsum.photos/id/177/600/600", hdSrc: "https://picsum.photos/id/177/1200/1200", badge: "Air" },
@@ -1482,15 +1859,14 @@
             { title: "Sawah Terasering", desc: "Keindahan hijau", src: "https://picsum.photos/id/30/600/600", hdSrc: "https://picsum.photos/id/30/1200/1200", badge: "Pedesaan" }
         ];
 
-        // Data Video dengan format contentid (BLOG_video_class)
-        // Menggunakan format seperti yang diminta: class="BLOG_video_class" contentid="f56735346d0fe035"
+        // Data Video menggunakan format BLOG_video_class dengan contentid
         const videoItems = [
-            { title: "Pemandangan Alam", desc: "Keindahan alam Indonesia", contentid: "f56735346d0fe035", badge: "Alam", videoUrl: "f56735346d0fe035" },
-            { title: "Liburan Keluarga", desc: "Momen kebersamaan", contentid: "a1b2c3d4e5f67890", badge: "Keluarga", videoUrl: "https://www.w3schools.com/html/movie.mp4" },
-            { title: "Kegiatan Sehari-hari", desc: "Rutinitas pagi", contentid: "g7h8i9j0k1l23456", badge: "Harian", videoUrl: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
-            { title: "Wisata Kuliner", desc: "Jajanan khas daerah", contentid: "m2n3o4p5q6r78901", badge: "Kuliner", videoUrl: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/earth.mp4" },
-            { title: "Olahraga", desc: "Aktivitas sehat", contentid: "s7t8u9v0w1x23456", badge: "Sport", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-            { title: "Hobi & Kreatif", desc: "Karya seni menarik", contentid: "y2z3a4b5c6d78901", badge: "Kreatif", videoUrl: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" }
+            { title: "Video 01", desc: "Fridzi 3D Animasi", contentid: "f56735346d0fe035", badge: "Video" },
+            { title: "Video 02", desc: "Konten menarik 2", contentid: "00c74b660d2e773f", badge: "Video" },
+            { title: "Video 03", desc: "Konten menarik 3", contentid: "00c74b660d2e773f", badge: "Video" },
+            { title: "Video 04", desc: "Konten menarik 4", contentid: "00c74b660d2e773f", badge: "Video" },
+            { title: "Video 05", desc: "Konten menarik 5", contentid: "00c74b660d2e773f", badge: "Video" },
+            { title: "Video 06", desc: "Konten menarik 6", contentid: "00c74b660d2e773f", badge: "Video" }
         ];
 
         const photoGrid = document.getElementById('photoGrid');
@@ -1562,32 +1938,18 @@
             const videoDiv = document.createElement('div');
             videoDiv.className = 'video-thumb';
             
-            // Membuat elemen video dengan class BLOG_video_class dan contentid
-            const video = document.createElement('video');
-            video.className = 'BLOG_video_class blog-video';
-            video.setAttribute('contentid', item.contentid);
-            video.setAttribute('id', `BLOG_video-${item.contentid}`);
-            video.setAttribute('height', '266');
-            video.setAttribute('playsinline', 'true');
-            video.setAttribute('preload', 'metadata');
-            video.setAttribute('muted', 'true');
-            video.style.width = '100%';
-            video.style.height = '100%';
-            video.style.objectFit = 'cover';
-            video.style.pointerEvents = 'none';
+            // Membuat objek video dengan format BLOG_video_class sesuai permintaan
+            const objectTag = document.createElement('object');
+            objectTag.className = 'BLOG_video_class';
+            objectTag.setAttribute('contentid', item.contentid);
+            objectTag.setAttribute('height', '200');
+            objectTag.setAttribute('width', '320');
+            objectTag.style.width = '100%';
+            objectTag.style.height = '100%';
+            objectTag.style.objectFit = 'cover';
             
-            // Sumber video (menggunakan video contoh untuk demo)
-            const source = document.createElement('source');
-            source.src = item.videoUrl;
-            source.type = 'video/mp4';
-            video.appendChild(source);
+            videoDiv.appendChild(objectTag);
             
-            // Tambahkan poster/thumbnail jika ada (opsional)
-            video.setAttribute('poster', 'https://picsum.photos/id/20/600/600');
-            
-            videoDiv.appendChild(video);
-            
-            // Overlay play icon
             const overlay = document.createElement('div');
             overlay.className = 'play-overlay';
             overlay.innerHTML = '<i class="fas fa-play-circle"></i>';
@@ -1599,37 +1961,24 @@
             infoDiv.innerHTML = `
                 <h3><span>${item.title}</span><span class="badge">${item.badge}</span></h3>
                 <p><i class="fas fa-video"></i> ${item.desc}</p>
-                <p style="font-size:0.65rem; color:#888;"><i class="fas fa-hashtag"></i> ID: ${item.contentid}</p>
             `;
             
             card.appendChild(mediaWrapper);
             card.appendChild(infoDiv);
             
             card.addEventListener('click', () => {
-                // Membuat modal video dengan format BLOG_video_class
+                // Membuat tampilan modal dengan format BLOG_video_class
                 galleryModalMedia.innerHTML = `
                     <div class="modal-video-container">
-                        <video class="BLOG_video_class blog-video-modal" 
-                               contentid="${item.contentid}" 
-                               id="modal_video_${item.contentid}"
-                               controls 
-                               autoplay
-                               style="width:100%; height:100%; object-fit:contain; background:#000;">
-                            <source src="${item.videoUrl}" type="video/mp4">
-                            Browser Anda tidak mendukung video.
-                        </video>
+                        <div class="separator" style="clear: both; text-align: center;">
+                            <object class="BLOG_video_class" contentid="${item.contentid}" height="200" width="320" style="width:100%; height:100%; object-fit:contain;"></object>
+                        </div>
                     </div>
                 `;
-                galleryModalCaption.innerText = `🎬 ${item.title} — ${item.desc} | Content ID: ${item.contentid}`;
+                galleryModalCaption.innerText = `🎬 ${item.title} — ${item.desc}`;
                 galleryModal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
                 addCloseButtonToContainer();
-                
-                // Autoplay video modal
-                const modalVideo = document.getElementById(`modal_video_${item.contentid}`);
-                if (modalVideo) {
-                    modalVideo.play().catch(e => console.log('Autoplay prevented:', e));
-                }
             });
             
             return card;
@@ -1637,7 +1986,6 @@
 
         // Render galeri foto
         photoItems.forEach(item => { photoGrid.appendChild(createPhotoCard(item)); });
-        
         // Render galeri video
         videoItems.forEach(item => { videoGrid.appendChild(createVideoCard(item)); });
 
