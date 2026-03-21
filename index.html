@@ -589,22 +589,86 @@
             filter: brightness(1.05) contrast(1.08);
         }
 
+        /* Styling untuk container video */
         .video-thumb {
             position: relative;
             width: 100%;
             height: 100%;
-            background: #0a2f3f;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
         }
 
-        .video-thumb video {
+        /* Styling untuk container bingkai video */
+        .video-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Styling untuk bingkai video */
+        .video-border {
+            padding: 8px;
+            border: 2px solid #ccc;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Efek hover untuk bingkai */
+        .thumbnail-card:hover .video-border {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .separator {
+            clear: both;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .separator object,
+        .separator .BLOG_video_class {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            pointer-events: none;
+        }
+
+        /* Styling untuk teks label video */
+        .video-title {
+            text-align: center;
+            font-weight: 600;
+            margin-top: 10px;
+            padding: 5px 10px;
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+            display: inline-block;
+            background-color: #f0f8ff;
+            color: #007BFF;
+            font-size: 12px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            width: auto;
+            cursor: pointer;
+        }
+
+        /* Efek hover untuk teks label */
+        .video-title:hover {
+            background-color: #007BFF;
+            color: #fff;
         }
 
         .play-overlay {
@@ -621,6 +685,7 @@
             opacity: 0.9;
             transition: all 0.3s ease;
             z-index: 2;
+            pointer-events: none;
         }
 
         .play-overlay i {
@@ -836,12 +901,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .modal-video-container video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
         }
 
         .modal-caption {
@@ -1518,6 +1577,12 @@
                 top: 10px;
                 right: 10px;
             }
+            
+            .video-title {
+                font-size: 10px;
+                padding: 3px 8px;
+                margin-top: 6px;
+            }
         }
     </style>
 </head>
@@ -1850,14 +1915,14 @@
             { title: "Sawah Terasering", desc: "Keindahan hijau", src: "https://picsum.photos/id/30/600/600", hdSrc: "https://picsum.photos/id/30/1200/1200", badge: "Pedesaan" }
         ];
 
-        // Data Video menggunakan format video HTML5 dengan file lokal
+        // Data Video menggunakan format BLOG_video_class
         const videoItems = [
-            { title: "Video 01", desc: "Video 3D Animasi", videoSrc: "AQP3-f0JM2pEefCkEwhoW6IJbvhxcnUEABNxsab24dYMzAy1ujwNJ2NgoaP2D8oV4JZUsD4qavk2hjd5v7xmMrk24MIqF3U-MIuvCmGONMPRbw.mp4", badge: "Video MP4" },
-            { title: "Video 02", desc: "Contoh video 2", videoSrc: "https://www.w3schools.com/html/movie.mp4", badge: "Video MP4" },
-            { title: "Video 03", desc: "Contoh video 3", videoSrc: "https://www.w3schools.com/html/mov_bbb.mp4", badge: "Video MP4" },
-            { title: "Video 04", desc: "Contoh video 4", videoSrc: "https://www.w3schools.com/html/movie.mp4", badge: "Video MP4" },
-            { title: "Video 05", desc: "Contoh video 5", videoSrc: "https://www.w3schools.com/html/mov_bbb.mp4", badge: "Video MP4" },
-            { title: "Video 06", desc: "Contoh video 6", videoSrc: "https://www.w3schools.com/html/movie.mp4", badge: "Video MP4" }
+            { title: "Video 01", desc: "Fridzi 3D Animasi", contentid: "f56735346d0fe035", badge: "Video" },
+            { title: "Video 02", desc: "Konten menarik 2", contentid: "00c74b660d2e773f", badge: "Video" },
+            { title: "Video 03", desc: "Konten menarik 3", contentid: "00c74b660d2e773f", badge: "Video" },
+            { title: "Video 04", desc: "Konten menarik 4", contentid: "00c74b660d2e773f", badge: "Video" },
+            { title: "Video 05", desc: "Konten menarik 5", contentid: "00c74b660d2e773f", badge: "Video" },
+            { title: "Video 06", desc: "Konten menarik 6", contentid: "00c74b660d2e773f", badge: "Video" }
         ];
 
         const photoGrid = document.getElementById('photoGrid');
@@ -1875,8 +1940,6 @@
                 closeBtn.className = 'close-gallery-modal';
                 closeBtn.innerHTML = '&times;';
                 closeBtn.onclick = () => {
-                    const videoElement = galleryModalMedia.querySelector('video');
-                    if (videoElement) videoElement.pause();
                     galleryModal.style.display = 'none';
                     galleryModalMedia.innerHTML = '';
                     document.body.style.overflow = 'auto';
@@ -1920,7 +1983,7 @@
             return card;
         }
 
-        // Fungsi membuat kartu video dengan format HTML5 video
+        // Fungsi membuat kartu video dengan struktur yang diminta
         function createVideoCard(item) {
             const card = document.createElement('div');
             card.className = 'thumbnail-card';
@@ -1931,26 +1994,47 @@
             const videoDiv = document.createElement('div');
             videoDiv.className = 'video-thumb';
             
-            // Membuat elemen video untuk thumbnail
-            const videoElement = document.createElement('video');
-            videoElement.src = item.videoSrc;
-            videoElement.muted = true;
-            videoElement.loop = true;
-            videoElement.playsInline = true;
-            videoElement.style.width = '100%';
-            videoElement.style.height = '100%';
-            videoElement.style.objectFit = 'cover';
+            // Membuat struktur video sesuai permintaan: video-container, video-border, separator, object
+            const videoContainer = document.createElement('div');
+            videoContainer.className = 'video-container';
+            videoContainer.style.width = '100%';
+            videoContainer.style.height = '100%';
             
-            // Coba putar video thumbnail secara otomatis (muted)
-            videoElement.play().catch(e => console.log('Auto-play thumbnail muted:', e));
+            const videoBorder = document.createElement('div');
+            videoBorder.className = 'video-border';
+            videoBorder.style.width = '100%';
+            videoBorder.style.height = '100%';
             
-            videoDiv.appendChild(videoElement);
+            const separator = document.createElement('div');
+            separator.className = 'separator';
+            separator.style.cssText = 'clear: both; text-align: center; width: 100%; height: 100%;';
+            
+            const objectTag = document.createElement('object');
+            objectTag.className = 'BLOG_video_class';
+            objectTag.setAttribute('contentid', item.contentid);
+            objectTag.setAttribute('height', '200');
+            objectTag.setAttribute('width', '320');
+            objectTag.setAttribute('id', `BLOG_video-${item.contentid}`);
+            objectTag.style.width = '100%';
+            objectTag.style.height = '100%';
+            objectTag.style.objectFit = 'cover';
+            
+            separator.appendChild(objectTag);
+            videoBorder.appendChild(separator);
+            videoContainer.appendChild(videoBorder);
+            videoDiv.appendChild(videoContainer);
+            
+            // Tambahkan teks label video
+            const videoTitle = document.createElement('div');
+            videoTitle.className = 'video-title';
+            videoTitle.innerText = item.title;
             
             const overlay = document.createElement('div');
             overlay.className = 'play-overlay';
             overlay.innerHTML = '<i class="fas fa-play-circle"></i>';
             videoDiv.appendChild(overlay);
             mediaWrapper.appendChild(videoDiv);
+            mediaWrapper.appendChild(videoTitle);
             
             const infoDiv = document.createElement('div');
             infoDiv.className = 'card-info';
@@ -1963,13 +2047,16 @@
             card.appendChild(infoDiv);
             
             card.addEventListener('click', () => {
-                // Membuat tampilan modal dengan video HTML5 yang bisa diputar
+                // Membuat tampilan modal dengan struktur yang sama
                 galleryModalMedia.innerHTML = `
                     <div class="modal-video-container">
-                        <video controls autoplay style="width:100%; height:100%; object-fit:contain;">
-                            <source src="${item.videoSrc}" type="video/mp4">
-                            Browser Anda tidak mendukung video.
-                        </video>
+                        <div class="video-container">
+                            <div class="video-border">
+                                <div class="separator" style="clear: both; text-align: center;">
+                                    <object class="BLOG_video_class" contentid="${item.contentid}" height="200" id="BLOG_video-${item.contentid}" width="320" style="width:100%; height:100%; object-fit:contain;"></object>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `;
                 galleryModalCaption.innerText = `🎬 ${item.title} — ${item.desc}`;
@@ -1989,8 +2076,6 @@
         // Tutup gallery modal ketika klik di luar konten
         galleryModal.onclick = (e) => {
             if (e.target === galleryModal) {
-                const videoElement = galleryModalMedia.querySelector('video');
-                if (videoElement) videoElement.pause();
                 galleryModal.style.display = 'none';
                 galleryModalMedia.innerHTML = '';
                 document.body.style.overflow = 'auto';
